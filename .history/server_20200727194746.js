@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 const server = jsonServer.create()
 const router = jsonServer.router('./database.json')
 const userdb = JSON.parse(fs.readFileSync('./users.json', 'UTF-8'))
-const productsdb = JSON.parse(fs.readFileSync('./products.json', 'UTF-8'))
+const productsdb = JSON.parse(fs.readFileSync('./database.json', 'UTF-8'))
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
@@ -93,7 +93,7 @@ server.post('/auth/login', (req, res) => {
 })
 server.get('/products', (req, res) => {
 
-  res.send(productsdb.products)
+  res.send(productsdb)
 })
 
 
@@ -124,6 +124,6 @@ server.use(/^(?!\/products).*$/, (req, res, next) => {
 
 server.use(router)
 
-server.listen(3000, () => {
+server.listen(8000, () => {
   console.log('Run Auth API Server')
 })

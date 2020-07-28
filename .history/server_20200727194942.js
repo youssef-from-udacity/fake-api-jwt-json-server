@@ -93,7 +93,7 @@ server.post('/auth/login', (req, res) => {
 })
 server.get('/products', (req, res) => {
 
-  res.send(productsdb.products)
+  res.send(productsdb)
 })
 
 
@@ -124,6 +124,6 @@ server.use(/^(?!\/products).*$/, (req, res, next) => {
 
 server.use(router)
 
-server.listen(3000, () => {
+server.listen(8000, () => {
   console.log('Run Auth API Server')
 })

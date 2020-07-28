@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken')
 const server = jsonServer.create()
 const router = jsonServer.router('./database.json')
 const userdb = JSON.parse(fs.readFileSync('./users.json', 'UTF-8'))
-const productsdb = JSON.parse(fs.readFileSync('./products.json', 'UTF-8'))
 
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(bodyParser.json())
@@ -91,13 +90,26 @@ server.post('/auth/login', (req, res) => {
   console.log("Access Token:" + access_token);
   res.status(200).json({ access_token })
 })
-server.get('/products', (req, res) => {
+server.get('/auth', (req, res) => {
+  const help = `
+  <pre>
+    Welcome to the Address Book API!
 
-  res.send(productsdb.products)
+    Use an Authorization header to work with your own data:
+
+    fetch(url, { headers: { 'Authorization': 'whatever-you-want' }})
+
+    The following endpoints are available:
+
+    GET /contacts
+    DELETE /contacts/:id
+    POST /contacts { name, email, avatarURL }
+  </pre>
+  `
+
+  res.send(help)
 })
-
-
-server.use(/^(?!\/products).*$/, (req, res, next) => {
+server.use(/^(?!\/auth).*$/, (req, res, next) => {
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401
     const message = 'Error in authorization format'
@@ -124,6 +136,6 @@ server.use(/^(?!\/products).*$/, (req, res, next) => {
 
 server.use(router)
 
-server.listen(3000, () => {
+server.listen(8000, () => {
   console.log('Run Auth API Server')
 })

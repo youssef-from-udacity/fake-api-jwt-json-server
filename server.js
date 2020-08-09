@@ -28,16 +28,25 @@ function verifyToken(token) {
 
 // Check if the user exists in database
 function isAuthenticated({ email, password }) {
-  return userdb.users.findIndex(user => user.email === email && user.password === password) !== -1
+  const userdb = JSON.parse(fs.readFileSync('./users.json', 'UTF-8'))
+  const databasedb = JSON.parse(fs.readFileSync('./database.json', 'UTF-8'))
+  const userIndex = userdb.users.findIndex(user => user.email === email && user.password === password)
+  console.log(userIndex)
+  if (userIndex !== -1) {
+    let clientIndex = databasedb.clients.findIndex(client => client.id === userdb.users[userIndex].id)
+    return { id, email, address, firstname, lastname, phone, zone, gender } = databasedb.clients[clientIndex]
+  } else {
+    return false;
+  }
 }
 
 // Register New User
 server.post('/auth/register', (req, res) => {
   console.log("register endpoint called; request body:");
   console.log(req.body);
-  const { email, password } = req.body;
+  const { email, password, address, approval, firstname, lastname, phone, zone, gender } = req.body;
 
-  if (isAuthenticated({ email, password }) === true) {
+  if (isAuthenticated({ email, password }) === false) {
     const status = 401;
     const message = 'Email and Password already exist';
     res.status(status).json({ status, message });
@@ -56,10 +65,17 @@ server.post('/auth/register', (req, res) => {
     var data = JSON.parse(data.toString());
 
     // Get the id of last user
-    var last_item_id = data.users[data.users.length - 1].id;
+    var last_item_id = data.users[data.users.length - 1].id + 1;
 
     //Add new user
-    data.users.push({ id: last_item_id + 1, email: email, password: password }); //add some data
+    data.users.push({
+      id: last_item_id,
+      email: email,
+      password: password
+    });
+
+
+    //add some data
     var writeData = fs.writeFile("./users.json", JSON.stringify(data), (err, result) => {  // WRITE
       if (err) {
         const status = 401
@@ -68,6 +84,41 @@ server.post('/auth/register', (req, res) => {
         return
       }
     });
+
+    fs.readFile("./database.json", (err, data2) => {
+      if (err) {
+        const status = 401
+        const message = err
+        res.status(status).json({ status, message })
+        return
+      };
+      // Get current users data2
+      var data2 = JSON.parse(data2.toString());
+
+      //Add user info to clients array in database
+      data2.clients.push({
+        id: last_item_id,
+        email: email,
+        address: address,
+        approval: approval,
+        firstname: firstname,
+        lastname: lastname,
+        phone: phone,
+        zone: zone,
+        gender: gender
+      });
+
+      //add some data
+      var writeData = fs.writeFile("./database.json", JSON.stringify(data2), (err, result) => {  // WRITE
+        if (err) {
+          const status = 401
+          const message = err
+          res.status(status).json({ status, message })
+          return
+        }
+      });
+
+    })
   });
 
   // Create token for new user
@@ -76,12 +127,56 @@ server.post('/auth/register', (req, res) => {
   res.status(200).json({ access_token })
 })
 
+// Reset User Password
+server.patch('/auth/reset', (req, res) => {
+  const { id, oldPassword, newPassword } = req.body;
+
+  fs.readFile("./users.json", (err, data) => {
+    if (err) {
+      const status = 401
+      const message = err
+      res.status(status).json({ status, message })
+      return
+    };
+
+    // Get current users data
+    var data = JSON.parse(data.toString());
+
+    const userIndex = data.users.findIndex(user => user.id === id && user.password === oldPassword)
+    if (userIndex !== -1) {
+      data.users[userIndex].password = newPassword
+
+
+      //add some data
+      var writeData = fs.writeFile("./users.json", JSON.stringify(data), (err, result) => {  // WRITE
+        if (err) {
+          const status = 401
+          const message = err
+          res.status(status).json({ status, message })
+          return
+        }
+      });
+    } else {
+      const status = 401;
+      const message = 'password mismatched';
+      res.status(status).json({ status, message });
+      return
+    }
+
+    res.status(200).json({ message: 'Password updated' })
+  });
+
+
+})
+
 // Login to one of the users from ./users.json
 server.post('/auth/login', (req, res) => {
   console.log("login endpoint called; request body:");
   console.log(req.body);
   const { email, password } = req.body;
-  if (isAuthenticated({ email, password }) === false) {
+  const profile = isAuthenticated({ email, password })
+
+  if (profile === false) {
     const status = 401
     const message = 'Incorrect email or password'
     res.status(status).json({ status, message })
@@ -89,15 +184,17 @@ server.post('/auth/login', (req, res) => {
   }
   const access_token = createToken({ email, password })
   console.log("Access Token:" + access_token);
-  res.status(200).json({ access_token })
+  console.log("profile:" + profile);
+  res.status(200).json({ access_token, profile })
 })
+
 server.get('/products', (req, res) => {
 
   res.send(productsdb.products)
 })
 
 
-server.use(/^(?!\/products).*$/, (req, res, next) => {
+server.use(/^(?!\/auth).*$/, (req, res, next) => {
   if (req.headers.authorization === undefined || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     const status = 401
     const message = 'Error in authorization format'

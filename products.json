@@ -4,17 +4,20 @@
             "id": "baby",
             "productsList": [
                 {
-                    "path": "bebealimentation",
+                    "path": "baby/bebealimentation",
+                    "target": "bebealimentation",
                     "title": "Alimentation",
                     "imgURL": "/assets/img/products/baby/bebealimentation.png"
                 },
                 {
-                    "path": "bebesoins",
+                    "path": "baby/bebesoins",
+                    "target": "bebesoins",
                     "title": "Soins",
                     "imgURL": "/assets/img/products/baby/bebesoins.png"
                 },
                 {
-                    "path": "couches",
+                    "path": "baby/couches",
+                    "target": "couches",
                     "title": "Couches",
                     "imgURL": "/assets/img/products/baby/couches.png"
                 }
@@ -24,27 +27,32 @@
             "id": "hygiene",
             "productsList": [
                 {
-                    "path": "apres-shamppoing",
+                    "path": "hygiene/apres-shamppoing",
+                    "target": "apres-shamppoing",
                     "title": "après-shamppoing",
                     "imgURL": "/assets/img/products/hygen/apres-shamppoing.png"
                 },
                 {
-                    "path": "papier-hygenique",
+                    "path": "hygiene/papier-hygenique",
+                    "target": "papier-hygenique",
                     "title": "papier WC Mouchoirs et coutons",
                     "imgURL": "/assets/img/products/hygen/papier-hygenique.png"
                 },
                 {
-                    "path": "coton-tige-et-coton",
+                    "path": "hygiene/coton-tige-et-coton",
+                    "target": "coton-tige-et-coton",
                     "title": "Coton et coton pads",
                     "imgURL": "/assets/img/products/hygen/coton-tige-et-coton.png"
                 },
                 {
-                    "path": "serviettes-hygenique",
+                    "path": "hygiene/serviettes-hygenique",
+                    "target": "serviettes-hygenique",
                     "title": "Hygiène féminine",
                     "imgURL": "/assets/img/products/hygen/serviettes-hygenique.png"
                 },
                 {
-                    "path": "soins-capilaires",
+                    "path": "hygiene/soins-capilaires",
+                    "target": "soins-capilaires",
                     "title": "Soins capilaires",
                     "imgURL": "/assets/img/products/hygen/soins-capilaires.png"
                 }

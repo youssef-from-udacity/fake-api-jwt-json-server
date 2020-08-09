@@ -17,12 +17,12 @@
       "familyId": 2
     },
     {
-      "id": 3,
       "name": "Product003",
+      "id": 3,
       "cost": 30,
       "quantity": 3000,
       "locationId": 3,
-      "familyId": 2
+      "familyId": 3
     },
     {
       "id": 4,
@@ -121,6 +121,22 @@
       "cost": 15,
       "quantity": 101,
       "productId": 3
+    },
+    {
+      "id": 4
+    }
+  ],
+  "clients": [
+    {
+      "id": 10,
+      "email": "josifsalam@outlook.com",
+      "address": "Rue 551 N11 Erac bouargane",
+      "approval": "on",
+      "firstname": "youssef",
+      "lastname": "Ait boudad",
+      "phone": "0623132321",
+      "zone": "s",
+      "gender": "monsieur"
     }
   ]
 }

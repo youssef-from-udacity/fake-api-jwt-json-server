@@ -40,6 +40,11 @@ function isAuthenticated({ email, password }) {
   }
 }
 
+function zeroPad(num, places) {
+  var zero = places - num.toString().length + 1;
+  return Array(+(zero > 0 && zero)).join("0") + num;
+}
+
 // Register New User
 server.post('/auth/register', (req, res) => {
   console.log("register endpoint called; request body:");
@@ -125,6 +130,54 @@ server.post('/auth/register', (req, res) => {
   const access_token = createToken({ email, password })
   console.log("Access Token:" + access_token);
   res.status(200).json({ access_token })
+})
+
+// Validate User Purchase
+server.post('/auth/purchase', (req, res) => {
+  const { id, date, activeTime, totalBasket, delivery, total, products, textarea, agreement } = req.body;
+
+  fs.readFile("./database.json", (err, data) => {
+    if (err) {
+      const status = 401
+      const message = err
+      res.status(status).json({ status, message })
+      return
+    };
+    // Get current users data
+    var data = JSON.parse(data.toString());
+
+    let clientIndex = data.clients.findIndex(client => client.id === id)
+    if (clientIndex !== -1) {
+      var purchaseId = data.clients[clientIndex].transactions.length + 1
+      purchaseId = zeroPad(purchaseId, 4);
+
+      data.clients[clientIndex].transactions.push({
+        purchaseId: purchaseId,
+        date: date,
+        activeTime: activeTime,
+        totalBasket: totalBasket,
+        delivery: delivery,
+        textarea: textarea,
+        agreement: agreement,
+        total: total,
+        products: products
+      })
+    }
+
+    //add some data
+    var writeData = fs.writeFile("./database.json", JSON.stringify(data), (err, result) => {  // WRITE
+      if (err) {
+        const status = 401
+        const message = err
+        res.status(status).json({ status, message })
+        return
+      }
+    });
+    res.status(200).json({ message: 'User purchase validated' })
+
+  })
+
+
 })
 
 // Reset User Password

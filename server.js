@@ -134,7 +134,7 @@ server.post('/auth/register', (req, res) => {
 
 // Validate User Purchase
 server.post('/auth/purchase', (req, res) => {
-  const { id, date, activeTime, totalBasket, delivery, total, products, textarea, agreement } = req.body;
+  var { id, purchaseId, date, activeTime, totalBasket, delivery, total, products, textarea, agreement, status } = req.body;
 
   fs.readFile("./database.json", (err, data) => {
     if (err) {
@@ -148,20 +148,39 @@ server.post('/auth/purchase', (req, res) => {
 
     let clientIndex = data.clients.findIndex(client => client.id === id)
     if (clientIndex !== -1) {
-      var purchaseId = data.clients[clientIndex].transactions.length + 1
-      purchaseId = zeroPad(purchaseId, 4);
+      if (purchaseId) {
+        let purchaseIndex = data.clients[clientIndex].transactions.findIndex(transaction => transaction.purchaseId === purchaseId)
+        data.clients[clientIndex].transactions[purchaseIndex] = {
+          purchaseId: purchaseId,
+          date: date,
+          activeTime: activeTime,
+          totalBasket: totalBasket,
+          delivery: delivery,
+          textarea: textarea,
+          agreement: agreement,
+          total: total,
+          status: status,
+          products: products
+        }
 
-      data.clients[clientIndex].transactions.push({
-        purchaseId: purchaseId,
-        date: date,
-        activeTime: activeTime,
-        totalBasket: totalBasket,
-        delivery: delivery,
-        textarea: textarea,
-        agreement: agreement,
-        total: total,
-        products: products
-      })
+      } else {
+
+        purchaseId = data.clients[clientIndex].transactions.length + 1
+        purchaseId = zeroPad(purchaseId, 4);
+
+        data.clients[clientIndex].transactions.push({
+          purchaseId: purchaseId,
+          date: date,
+          activeTime: activeTime,
+          totalBasket: totalBasket,
+          delivery: delivery,
+          textarea: textarea,
+          agreement: agreement,
+          total: total,
+          status: status,
+          products: products
+        })
+      }
     }
 
     //add some data

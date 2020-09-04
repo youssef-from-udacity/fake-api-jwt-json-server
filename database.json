@@ -182,7 +182,7 @@
             8,
             2
           ],
-          "activeTime": 1,
+          "activeTime": 2,
           "totalBasket": 210,
           "delivery": 45,
           "textarea": "",
@@ -211,54 +211,126 @@
               "price": 10
             }
           ]
-        }
-      ],
-      "collections": [
+        },
         {
-          "name": "Morocco",
+          "purchaseId": "0003",
+          "date": [
+            2020,
+            8,
+            2
+          ],
+          "activeTime": 1,
+          "totalBasket": 262,
+          "delivery": 45,
+          "textarea": "",
+          "agreement": "first",
+          "total": 307,
+          "status": "En cours",
           "products": [
             {
               "id": "bebealimentation0",
-              "title": "Alimentation",
-              "subtitle": "4 céréales - DIETITIQUE",
-              "price": "20.00",
+              "order": 1,
               "imgURL": "/assets/img/products/grocery/cerelac-fruits-200g.png",
               "minOrder": 1,
-              "quantity": "1 L"
+              "quantity": "1 L",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 20
             },
             {
               "id": "bebealimentation1",
-              "title": "Alimentation",
-              "subtitle": "4 céréales - DIETITIQUE",
-              "price": "10.00",
+              "order": 1,
               "imgURL": "/assets/img/products/grocery/gout-biscuite-lait.png",
               "minOrder": 1,
-              "quantity": "130 g"
+              "quantity": "130 g",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 10
             },
             {
               "id": "bebealimentation2",
-              "title": "Alimentation",
-              "subtitle": "4 céréales - DIETITIQUE",
-              "price": "34.00",
+              "order": 6,
               "imgURL": "/assets/img/products/grocery/redBull.png",
               "minOrder": 1,
-              "quantity": "330 g"
+              "quantity": "330 g",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 34
+            },
+            {
+              "id": "bebealimentation3",
+              "order": 1,
+              "imgURL": "/assets/img/products/grocery/redBull.png",
+              "minOrder": 1,
+              "quantity": "250 ml",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 28
             }
           ]
         },
         {
-          "name": "Shampoo",
+          "purchaseId": "0004",
+          "date": [
+            2020,
+            8,
+            2
+          ],
+          "activeTime": 1,
+          "totalBasket": 262,
+          "delivery": 45,
+          "textarea": "",
+          "agreement": "first",
+          "total": 307,
+          "status": "En cours",
           "products": [
             {
-              "id": "bebealimentation4",
-              "title": "Alimentation",
-              "subtitle": "4 céréales - DIETITIQUE",
-              "price": "29.00",
-              "imgURL": "/assets/img/products/grocery/bledilait-croissance.png",
+              "id": "bebealimentation0",
+              "order": 1,
+              "imgURL": "/assets/img/products/grocery/cerelac-fruits-200g.png",
               "minOrder": 1,
-              "quantity": "400 g"
+              "quantity": "1 L",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 20
+            },
+            {
+              "id": "bebealimentation1",
+              "order": 1,
+              "imgURL": "/assets/img/products/grocery/gout-biscuite-lait.png",
+              "minOrder": 1,
+              "quantity": "130 g",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 10
+            },
+            {
+              "id": "bebealimentation2",
+              "order": 6,
+              "imgURL": "/assets/img/products/grocery/redBull.png",
+              "minOrder": 1,
+              "quantity": "330 g",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 34
+            },
+            {
+              "id": "bebealimentation3",
+              "order": 1,
+              "imgURL": "/assets/img/products/grocery/redBull.png",
+              "minOrder": 1,
+              "quantity": "250 ml",
+              "subtitle": "4 céréales - DIETITIQUE",
+              "title": "Alimentation",
+              "price": 28
             }
           ]
+        }
+      ],
+      "collections": [
+        {
+          "name": "Shampoo",
+          "products": []
         }
       ]
     }
